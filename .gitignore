@@ -1,3 +1,6 @@
+# =========================================================================
+# Java Core
+# =========================================================================
 # Compiled class file
 *.class
 
@@ -10,15 +13,76 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
+# Package Files (Uncomment if you do not want to track packaged binaries)
+# *.jar
+# *.war
+# *.nar
+# *.ear
+# *.zip
+# *.tar.gz
+# *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Virtual machine crash logs
 hs_err_pid*
 replay_pid*
+
+# =========================================================================
+# Build Tools (Maven & Gradle)
+# =========================================================================
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+pom.xml.bak
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+!/.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+bin/
+build/
+.gradle
+.gradletasknamecache
+gradle-app.setting
+!gradle-wrapper.jar
+
+# =========================================================================
+# IDEs (IntelliJ IDEA, Eclipse, VS Code)
+# =========================================================================
+# IntelliJ IDEA
+*.iml
+*.ipr
+*.iws
+.idea/
+.idea_modules/
+out/
+
+# Eclipse
+.metadata
+.classpath
+.project
+.settings/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+
+# Visual Studio Code
+.vscode/
+
+# =========================================================================
+# Operating System Files
+# =========================================================================
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
