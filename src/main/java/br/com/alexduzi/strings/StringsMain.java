@@ -1,7 +1,5 @@
 package br.com.alexduzi.strings;
 
-import java.util.Locale;
-
 public class StringsMain {
     public static void main(String[] args) {
         String greeting = "Hello";
