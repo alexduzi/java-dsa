@@ -11,7 +11,7 @@ public class Main {
         int N = nums.length;
 
         for (int i = 0; i < N; i++) {
-            boolean swapped = true;
+            boolean swapped = false;
             for (int j = 0; j < N-1-i; j++) {
                 if (nums[j] > nums[j+1]) {
                     int aux = nums[j];
