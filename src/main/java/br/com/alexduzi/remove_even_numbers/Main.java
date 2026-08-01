@@ -7,6 +7,8 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         System.out.println(Arrays.toString(removeEvenNumbers(new int[] { 1 , 2, 3, 4, 5, 6, 8, 9, 10 })));
+        System.out.println(Arrays.toString(removeEvenNumbers2(new int[] { 1 , 2, 3, 4, 5, 6, 8, 9, 10 })));
+        System.out.println(Arrays.toString(removeEvenNumbers3(new int[] { 1 , 2, 3, 4, 5, 6, 8, 9, 10 })));
     }
 
     static int[] removeEvenNumbers(int[] numbers) {
@@ -23,5 +25,17 @@ public class Main {
         return Arrays.stream(numbers)
                 .filter(num -> num % 2 != 0)
                 .toArray();
+    }
+
+    static int[] removeEvenNumbers3(int[] numbers) {
+        int[] newNumbers = new int[numbers.length];
+        int j = 0;
+        for (int i = 0; i < numbers.length; i++) {
+            if (numbers[i] % 2 != 0) { // remover números pares
+                newNumbers[j] = numbers[i];
+                j++;
+            }
+        }
+        return Arrays.copyOf(newNumbers, j);
     }
 }
