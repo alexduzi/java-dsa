@@ -32,6 +32,10 @@ public class Main {
             "0201","0101","0102","1212","2002"
         }, 
         "0202"));
+
+        String[] arg1 = {};
+
+        System.out.println(arg1);
     }
     
     public static int openLock(String[] deadends, String target) {
