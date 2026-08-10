@@ -27,7 +27,7 @@ public class Main {
     }
 
     // naive recursive implementation
-    // Complexity time O(2^n) - space O(1)
+    // Complexity time O(2^n) - space O(n)
     static long fib2(int n) {
         if (n <= 0) return 0;
 
