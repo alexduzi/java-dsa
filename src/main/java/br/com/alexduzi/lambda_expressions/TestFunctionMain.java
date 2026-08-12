@@ -1,7 +1,9 @@
 package br.com.alexduzi.lambda_expressions;
 
 import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 public class TestFunctionMain {
     public static void main(String[] args) {
@@ -19,5 +21,16 @@ public class TestFunctionMain {
 
         BiFunction<String, String, String> biFn2 = (s1, s2) -> s1.concat(s2);
         System.out.println("BiFunction: " + biFn2.apply("William", "Shakespeare"));
+
+        // used for transform the input into an output (types are the same)
+        // UnaryOperator<T> extends Function<T, T> is a functional interface i.e. one abstract method:
+        // T apply(T t)
+        UnaryOperator<String> unaryOp = name -> "My name is " +name;
+        System.out.println("UnaryOperator: " + unaryOp.apply("Sean"));
+
+        // BinaryOperator<T> extends BiFunction<T, T, T> is a functional interface i.e one abstract method:
+        // T apply(T t1, T t2)
+        BinaryOperator<String> binaryOp = (s1, s2) -> s1.concat(s2);
+        System.out.println("BinaryOperator: " + binaryOp.apply("William", "Shakespeare"));
     }
 }
