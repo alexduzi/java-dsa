@@ -4,14 +4,14 @@ import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 // custom function interface
-interface Evaluate<T> {
+interface EEvaluate<T> {
     boolean isNegative(T i);
 }
 
 public class TestPredicateMain {
     public static void main(String[] args) {
         // using the custom function interface
-        Evaluate<Integer> lambda = i -> i > 0;
+        EEvaluate<Integer> lambda = i -> i > 0;
         System.out.println("1 > 0 " + lambda.isNegative(1));
         System.out.println("-1 > 0 " + lambda.isNegative(-1));
 
