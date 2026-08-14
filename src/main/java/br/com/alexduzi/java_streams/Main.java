@@ -215,4 +215,20 @@ public class Main {
         int length = stream.reduce(0, (n, str) -> n + str.length(), (n1, n2) -> n1 + n2);
         System.out.println(length);
     }
+
+    static void terminalOperations6() {
+        // StringBuilder collect(Supplier<StringBuilder> supplier,
+        //                       BiConsumer<StringBuilder, String> accumulator,
+        //                       BiConsumer<StringBuilder, StringBuilder> combiner)
+        // This version is used when you want complete control over
+        // how collecting should work. The accumulator adds an element
+        // to the collection e.g the next String to the StringBuilder.
+        // The combiner takes two collections and merges them. It is usefull
+        // in parallel processing
+        StringBuilder word = Stream.of("ad", "jud", "i", "cate")
+                .collect(() -> new StringBuilder(),          // StringBuilder::new
+                        (sb, str) -> sb.append(str), // StringBuilder::append
+                        (sb1, sb2) -> sb1.append(sb2)); // StringBuilder::append
+        System.out.println(word);
+    }
 }
