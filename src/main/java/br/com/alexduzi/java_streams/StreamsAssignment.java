@@ -56,6 +56,18 @@ class Person{
     }
 }
 
+class Book{
+    private String title;
+    private double price;
+    Book(String title, double price){
+        this.title = title;
+        this.price = price;
+    }
+    public String getTitle() {   return title;}
+    public double getPrice() {   return price;}
+    public String toString() { return title+ " " + price;}
+}
+
 public class StreamsAssignment {
     public static void main(String[] args) {
         ex1();
@@ -63,6 +75,7 @@ public class StreamsAssignment {
         ex3();
         ex4();
         ex5();
+        ex6();
     }
 
 //    Stream a list of int primitives between the range of 0 (inclusive) and 5 (exclusive).
@@ -171,5 +184,31 @@ public class StreamsAssignment {
             grade.of("FAIL"); // Optionals are immutable!
         }
         return grade;
+    }
+
+    public static void ex6() {
+//        Given the Book class (in the zip file), declare a List typed for Book with the following Book’s:
+//          a. title=”Thinking in Java”, price=30.0
+//          b. title=”Java in 24 hrs”, price=20.0
+//          c. title=”Java Recipes”, price=10.0
+//        Stream the books and calculate the average price of the books whose price is > 10.
+//        Change the filter to books whose price is > 90. Ensure you do not get an exception.
+        List<Book> books = List.of(new Book("Thinking in Java", 30.0),
+                                   new Book("Java in 24 hrs", 20.0),
+                                   new Book("Java Recipes", 10.0));
+
+        double avg1 = books.stream()
+                .filter(b -> b.getPrice() > 10)
+                .mapToDouble(b -> b.getPrice())
+                .average()
+                .orElse(0.0);
+        System.out.println(avg1);
+
+        double avg2 = books.stream()
+                .filter(b -> b.getPrice() > 90)
+                .mapToDouble(b -> b.getPrice())
+                .average()
+                .orElse(0.0);
+        System.out.println(avg2);
     }
 }
