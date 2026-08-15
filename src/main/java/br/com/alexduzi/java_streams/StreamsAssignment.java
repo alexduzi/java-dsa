@@ -78,6 +78,8 @@ public class StreamsAssignment {
         ex5();
         ex6();
         ex7();
+        ex8();
+        ex9();
     }
 
 //    Stream a list of int primitives between the range of 0 (inclusive) and 5 (exclusive).
@@ -236,5 +238,48 @@ public class StreamsAssignment {
                 System.out.printf("Book: %s prince: %.2f", key, value);
             }
         });
+    }
+
+    static void ex8() {
+//     Given the Book class (in the zip file), declare a List typed for Book with the following Book’s:
+//        a. title=”Gone with the wind”, price=5.0
+//        b. title=”Gone with the wind”, price=10.0
+//        c. title=”Atlas shrugged”, price=15.0
+//          In a pipeline which has no return type:
+//                stream the books
+//                using the collect() method, generate a Map that maps the book title to its price
+//                using forEach(), output the title and price of each entry in the map
+//                        What happened and why? Fix this by using the Collectors.toMap(Function, Function,
+//                                BinaryOperator) method.
+        List<Book> books = List.of(new Book("Gone with the wind", 5.0),
+                new Book("Gone with the wind", 10.0),
+                new Book("Atlas shrugged", 15.0));
+
+        books.stream()
+            //.collect(Collectors.toMap(Book::getTitle, Book::getPrice)) //  IllegalStateException
+            .collect(Collectors.toMap(Book::getTitle, Book::getPrice, (b1, b2) -> b1*b2)) // merge function version
+            .forEach((a, b)->System.out.println(a+" "+b));
+    }
+
+    static void ex9() {
+//      Given the Person class (in the zip file), declare a List typed for Person with the following Person’s:
+//            a. name=”Bob”, age=31
+//            b. name=”Paul”, age=32
+//            c. name=”John”, age=33
+//       Pipeline the following where the return type is double:
+//       stream the people
+//       filter the stream for Person’s whose age is < 30 map to int primitives
+//       calculate the average age.
+//       This should generate a NoSuchElementException. Using orElse(), fix the pipeline (not the filter) so
+//       that 0.0 is returned instead of an exception being generated.
+        List<Person> persons = List.of(new Person("Bob", "Burke", 31),
+                new Person("Paul", "Peters", 32),
+                new Person("John", "Castle", 33));
+        double avg = persons.stream()
+                .filter(p -> p.getAge() < 30)
+                .mapToInt(Person::getAge)
+                .average()
+                .orElse(0.0);
+        System.out.println(avg);
     }
 }
