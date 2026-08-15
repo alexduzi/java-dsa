@@ -1,6 +1,7 @@
 package br.com.alexduzi.java_streams;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
@@ -101,6 +102,7 @@ public class StreamsAssignment {
         ex11();
         ex12();
         ex13();
+        ex14();
     }
 
 //    Stream a list of int primitives between the range of 0 (inclusive) and 5 (exclusive).
@@ -387,5 +389,48 @@ public class StreamsAssignment {
         List<Integer> ls = Arrays.asList(11, 11, 22, 33, 33, 55, 66);
         System.out.println(ls.stream().distinct().anyMatch(n -> n == 11));
         System.out.println(ls.stream().distinct().noneMatch(n -> n % 11 > 0));
+    }
+
+    static void ex14() {
+//        Note that an AtomicInteger is a version of Integer that is safe to use in
+//        concurrent (multi-threaded) environments. The method incrementAndGet() is similar to ++ai
+//        a) Why is the value of ai at the end 0 (and not 4)?
+        AtomicInteger ai = new AtomicInteger(); // initial value of 0
+        Stream.of(11, 11, 22, 33)
+                .parallel()
+                .filter(n -> {
+                    ai.incrementAndGet();
+                    return n % 2 == 0;
+                });
+        System.out.println(ai);
+
+//        Because the stream pipeline is never executed. filter is an intermediate (lazy) operation, it
+//        just builds up a description of the pipeline but doesn't run anything.
+//
+//        Streams only actually process elements when a terminal operation is
+//        invoked (like forEach, collect, count, anyMatch, etc.). Here you call .filter(...)
+//        and then just stop, there's no terminal operation, so nothing ever traverses the stream,
+//        the lambda inside filter never runs, and ai stays at 0.
+//        to fix this issue, just invoke any terminal operation, it can be the count();
+
+//        The following code generates an IllegalStateException. Fix the code.
+        AtomicInteger ai2 = new AtomicInteger(); // initial value of 0
+        Stream<Integer> stream = Stream.of(11, 11, 22, 33).parallel();
+        stream.filter(n -> {
+                    ai.incrementAndGet();
+                    return n % 2 == 0;
+                }).forEach(System.out::println);
+        // stream.forEach(System.out::println); // IllegalStateException
+        System.out.println(ai2);
+
+//        The problem is that streams can only be operated on once (via a terminal operation).
+//                stream.filter(...) returns a new stream, but that new stream is discarded
+//        you never called anything on it. Then you try to call forEach on the original stream,
+//                which is illegal because a stream can't have a terminal operation invoked on it more than once
+//    (and here, calling any operation on it a second time after it's already been "consumed"
+//        conceptually by attempting to build off it triggers IllegalStateException — more precisely,
+//        invoking a second operation on the same stream instance).
+//
+//        Fix: chain the operations so filter and forEach act on the same pipeline
     }
 }
