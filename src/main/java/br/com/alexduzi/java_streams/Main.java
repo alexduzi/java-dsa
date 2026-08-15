@@ -3,7 +3,7 @@ package br.com.alexduzi.java_streams;
 import java.util.*;
 import java.util.function.BinaryOperator;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
+import java.util.stream.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -230,5 +230,108 @@ public class Main {
                         (sb, str) -> sb.append(str), // StringBuilder::append
                         (sb1, sb2) -> sb1.append(sb2)); // StringBuilder::append
         System.out.println(word);
+    }
+
+    static void terminalOperations7() {
+        String stream = Stream.of("cake", "biscuits", "apple tart")
+                .collect(Collectors.joining(", "));
+        System.out.println(stream); // cake, biscuits, apple tart
+
+        Double avg = Stream.of("cake", "biscuits", "apple tart")
+                .collect(Collectors.averagingInt(s -> s.length()));
+        System.out.println(avg); // 7.3333
+
+        // Collecting to Maps, two functions required: the first function tells the collector
+        // how to create the key; the second fuinction tells the collector how to create the value
+        Map<String, Integer> map =
+                Stream.of("cake", "biscuits", "apple tart")
+                        .collect(Collectors.toMap(s -> s, // Function for the key
+                                                  s -> s.length())); // Function for the value
+        System.out.println(map);
+
+
+        Map<Integer, String> map2 =
+                Stream.of("cake", "biscuits", "apple tart")
+                        .collect(Collectors.toMap(s -> s.length(), // key is the length
+                                                  s -> s, // value is the string
+                                                       (s1, s2) -> s1 + "," + s2)); // merge function
+        System.out.println(map2); // {4=cake,tart, 8=biscuits}
+
+        // the maps returned are HashMaps but this is not guaranteed, What if we wanted
+        // a TreeMap implementation so our keys would be sorted. The last argument
+        // caters for this
+        //    Collectors.toMap
+        //    @NotNull   java.util.function.Function<? super T, ? extends K> keyMapper,
+        //    @NotNull   java.util.function.Function<? super T, ? extends U> valueMapper,
+        //    @NotNull   java.util.function.BinaryOperator<U> mergeFunction,
+        //    @NotNull   java.util.function.Supplier<@NotNull   M> mapFactory
+        TreeMap<String, Integer> map3 =
+                Stream.of("cake", "biscuits", "apple tart", "cake")
+                        .collect(Collectors.toMap(s -> s,
+                                                  s -> s.length(),
+                                                  (len1, len2) -> len1 + len2,
+                                                  () -> new TreeMap<>())); // TreeMap::new
+        System.out.println(map3); // {apple tart=10, biscuits=8, cake=8}
+        System.out.println(map3.getClass()); // class java.util.TreeMap
+    }
+
+    static void terminalOperations8() {
+        // groupingBy() tells collect() to group all of the elements into a Map
+        // groupingBy() takes a Function which determines the keys in the Map
+        // Each value is a List of all entries that match that key
+        // The List is a default, which can be changed
+        Stream<String> names = Stream.of("Joe", "Tom", "Tom", "Alan", "Peter");
+        Map<Integer, List<String>> map =
+                names.collect(
+                        // passing in a Function that determines the
+                        // key in the map
+                        Collectors.groupingBy(String::length) // s -> s.length()
+                );
+        System.out.println(map);
+
+        // removing duplicates by returing a set
+        Stream<String> names2 = Stream.of("Joe", "Tom", "Tom", "Alan", "Peter");
+        Map<Integer, Set<String>> map2 =
+                names.collect(
+                        Collectors.groupingBy(
+                        String::length,
+                        Collectors.toSet()) // s -> s.length()
+                );
+        System.out.println(map2);
+    }
+
+    static void primitiveStreams() {
+        int[] ia = {1, 2, 3};
+        double[] da = {1.1, 2.2, 3.3};
+        long[] la = {1L, 2L, 3L};
+
+        IntStream iStream1 = Arrays.stream(ia);
+        DoubleStream dStream1 = Arrays.stream(da);
+        LongStream lStream1 = Arrays.stream(la);
+
+        IntStream iStream2 = IntStream.of(1, 2, 3);
+        DoubleStream dStream2 = DoubleStream.of(1.1, 2.2, 3.3);
+        LongStream lStream3 = LongStream.of(1L, 2L, 3L);
+    }
+
+    // IntStream.of(5, 10, 15, 20);
+    // IntStream.empty();
+    static void printStats(IntStream numbers) {
+        IntSummaryStatistics intStats = numbers.summaryStatistics(); // terminal op.
+
+        int min = intStats.getMin();
+        System.out.println(min); // 5 (2147483647 if nothing in stream)
+
+        int max = intStats.getMax();
+        System.out.println(max); // 20 (-2147483647 if nothing in stream)
+
+        double avg = intStats.getAverage();
+        System.out.println(avg); // 12.5 (0.0 if nothing in stream)
+
+        long count = intStats.getCount();
+        System.out.println(count); // 4 (0 if nothing in stream)
+
+        long sum = intStats.getSum();
+        System.out.println(sum); // 50 (0 if nothing in stream)
     }
 }
