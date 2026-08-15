@@ -69,6 +69,22 @@ class Book{
     public String toString() { return title+ " " + price;}
 }
 
+class AnotherBook {
+    private String title;
+    private String genre;
+    public AnotherBook(String title, String genre){
+        this.title = title;
+        this.genre = genre;
+    }     //accessors not shown
+    public String getTitle() {
+        return title;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+}
+
 public class StreamsAssignment {
     public static void main(String[] args) {
         ex1();
@@ -81,6 +97,7 @@ public class StreamsAssignment {
         ex8();
         ex9();
         ex10();
+        ex11();
     }
 
 //    Stream a list of int primitives between the range of 0 (inclusive) and 5 (exclusive).
@@ -313,8 +330,29 @@ public class StreamsAssignment {
 //        ‘price’). Use Optional.ofNullable passing in null.
 //                i. initialise a Double z to the return of “price3.orElseThrow(() -> new
 //                RuntimeException(“Bad Code”). Output and observe the value of z.
-        Optional<Double> price3 = Optional.ofNullable(null);
-        Double z = price3.orElseThrow(() -> new RuntimeException("Bad Code")); // Exception in thread "main" java.lang.RuntimeException: Bad Code
-        System.out.println(z);
+
+        // uncomment the code below to see the output.
+
+        // Optional<Double> price3 = Optional.ofNullable(null);
+        // Double z = price3.orElseThrow(() -> new RuntimeException("Bad Code")); // Exception in thread "main" java.lang.RuntimeException: Bad Code
+        // System.out.println(z);
+    }
+
+    static void ex11() {
+//        Given the AnotherBook class (in the zip file), declare a List typed for AnotherBook namely ‘books’
+//        with the following AnotherBook’s:
+//        a. title=”Gone with the wind”, genre=”Fiction”
+//        b. title=”Bourne Ultimatum”, genre=”Thriller”
+//        c. title=”The Client”, genre=”Thriller”
+//        Declare the following: List<String> genreList = new ArrayList<>();
+//        Stream books so that genreList refers to a List containing the genres of the books in the books List.
+        List<AnotherBook> books = List.of(new AnotherBook("Gone with the wind", "Fiction"),
+                                    new AnotherBook("Bourne Ultimatum", "Thriller"),
+                                    new AnotherBook("The Client", "Thriller"));
+        List<String> genreList = new ArrayList<>();
+        books.stream()
+                .map(AnotherBook::getGenre)
+                .forEach(genreList::add);
+        System.out.println(genreList);
     }
 }
