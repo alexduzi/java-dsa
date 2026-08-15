@@ -1,6 +1,7 @@
 package br.com.alexduzi.java_streams;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -76,6 +77,7 @@ public class StreamsAssignment {
         ex4();
         ex5();
         ex6();
+        ex7();
     }
 
 //    Stream a list of int primitives between the range of 0 (inclusive) and 5 (exclusive).
@@ -210,5 +212,29 @@ public class StreamsAssignment {
                 .average()
                 .orElse(0.0);
         System.out.println(avg2);
+    }
+
+    static void ex7() {
+//        Given the Book class (in the zip file), declare a List typed for Book with the following Book’s:
+//          a. title=”Atlas Shrugged”, price=10.0
+//          b. title=”Freedom at Midnight”, price=5.0
+//          c. title=”Gone with the wind”, price=5.0
+//          Stream the books and instantiate a Map named ‘bookMap’ that maps the book title to its price. To do
+//            this use the collect(Collectors.toMap(Function fnToGetKey, Function fnToGetValue)). Iterate
+//          through ‘bookMap’ (using the Map forEach(BiConsumer) method). The BiConsumer only outputs
+//          prices where the title begins with “A”.
+        List<Book> books = List.of(new Book("Atlas Shrugged", 10.0),
+                new Book("Freedom at Midnight", 5.0),
+                new Book("Gone with the wind", 5.0));
+
+        Map<String, Double> bookMap = books
+                .stream()
+                .collect(Collectors.toMap(Book::getTitle, Book::getPrice));
+
+        bookMap.forEach((key, value) -> {
+            if (key.startsWith("A")) {
+                System.out.printf("Book: %s prince: %.2f", key, value);
+            }
+        });
     }
 }
