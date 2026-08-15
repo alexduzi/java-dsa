@@ -80,6 +80,7 @@ public class StreamsAssignment {
         ex7();
         ex8();
         ex9();
+        ex10();
     }
 
 //    Stream a list of int primitives between the range of 0 (inclusive) and 5 (exclusive).
@@ -281,5 +282,39 @@ public class StreamsAssignment {
                 .average()
                 .orElse(0.0);
         System.out.println(avg);
+    }
+
+    static void ex10() {
+//     Declare an Optional, typed for Double, named ‘price’ using the Optional.ofNullable(20.0).
+//     Output the Optional value for ‘price’ 3 times: using ifPresent(Consumer), orElse(T) and
+//        orElseGet(Supplier).
+        Optional<Double> price = Optional.ofNullable(20.0);
+        price.ifPresent(System.out::println);
+        System.out.println(price.orElse(0.0));
+        System.out.println(price.orElseGet(() -> 0.0));
+
+//        declare a new Optional, typed for Double, named ‘price2’ (or comment out (a) and re-use ‘price’).
+//        Use Optional.ofNullable again but this time, pass in null.
+//                i. Output ‘price2’ in a normal System.out.println().
+//                ii. check to see if price2 isEmpty() and if so output “empty”.
+//        iii. do (ii) again except this time use the more functional “ifPresent(Consumer)” method.
+//                iv. initialise a Double x to the return of “price2.orElse(44.0)”. Output and observe the
+//        value of x.
+        Optional<Double> price2 = Optional.ofNullable(null);
+        System.out.println(price2);
+        if (price2.isEmpty()) {
+            System.out.println("empty");
+        }
+        price2.ifPresent(System.out::println);
+        Double x = price2.orElse(44.0);
+        System.out.println(x);
+
+//        declare a new Optional, typed for Double, named ‘price3’ (or comment out (b) and re-use
+//        ‘price’). Use Optional.ofNullable passing in null.
+//                i. initialise a Double z to the return of “price3.orElseThrow(() -> new
+//                RuntimeException(“Bad Code”). Output and observe the value of z.
+        Optional<Double> price3 = Optional.ofNullable(null);
+        Double z = price3.orElseThrow(() -> new RuntimeException("Bad Code")); // Exception in thread "main" java.lang.RuntimeException: Bad Code
+        System.out.println(z);
     }
 }
