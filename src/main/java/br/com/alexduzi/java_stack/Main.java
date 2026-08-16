@@ -21,6 +21,9 @@ public class Main {
     }
 }
 
+// último que entra é o primeiro que sai
+// LAST IN FIRST OUT
+// LIFO
 class MyCustomStack<T> {
     private T[] items;
     private int size;
