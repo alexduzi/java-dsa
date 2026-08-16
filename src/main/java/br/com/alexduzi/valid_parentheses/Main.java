@@ -7,8 +7,9 @@ import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) {
-        // System.out.println(isValid("((({{{}}}[])))"));
-        System.out.println(isValid2("()[)]({}))"));
+        System.out.println(isValid3("((({{{}}}[])))"));
+        // System.out.println(isValid2("()[)]({}))"));
+        System.out.println(isValid3("()[)]({}))"));
     }
 
     static boolean isValid(String s) {
@@ -57,5 +58,28 @@ public class Main {
             }
         }
         return stack.isEmpty();
+    }
+
+    // using switch case
+    static boolean isValid3(String s) {
+        Stack<Character> stack = new Stack<>();
+        for (Character symbol : s.toCharArray()) {
+            switch (symbol) {
+                case '(', '{', '[' -> stack.push(symbol);
+                case ')', '}', ']' -> {
+                    if (stack.isEmpty() || !isMatching(stack.pop(), symbol)) {
+                        return false;
+                    }
+                }
+                default -> { }
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    private static boolean isMatching(char open, char close) {
+        return (open == '(' && close == ')') ||
+                (open == '{' && close == '}') ||
+                (open == '[' && close == ']');
     }
 }
