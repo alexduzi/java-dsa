@@ -11,11 +11,17 @@ public class Main {
         myStack.push(4);
         myStack.push(5);
 
+        System.out.println("Stack is empty: " + myStack.isEmpty());
+
+        System.out.println("Stack count items: " + myStack.count());
+
         Integer value;
         while (!myStack.isEmpty()) {
             value = myStack.pop();
-            System.out.println("Popped value: " + value);
+            System.out.print(value + " ");
         }
+
+        System.out.println();
 
         System.out.println("Stack is empty: " + myStack.isEmpty());
     }
