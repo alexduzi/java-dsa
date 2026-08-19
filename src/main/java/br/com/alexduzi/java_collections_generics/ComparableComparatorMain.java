@@ -142,7 +142,7 @@ class Product implements Comparable<Product>{
 class Dog implements Comparable<Dog> {
     private String name;
     private Integer age;
-
+    public Dog() {}
     public Dog(String name, Integer age) {
         this.name = name;
         this.age = age;
@@ -182,7 +182,7 @@ class Dog implements Comparable<Dog> {
 class Cat {
     private String name;
     private int age;
-
+    public Cat() {}
     public Cat(String name, int age) {
         this.name = name;
         this.age = age;
