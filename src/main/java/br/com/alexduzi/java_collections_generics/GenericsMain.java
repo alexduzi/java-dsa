@@ -39,24 +39,24 @@ public class GenericsMain {
         List<Cat3> cats3 = new ArrayList<>();     // or use type inference
         // As the JVM does not know the types (stripped out during type erasure), the
         // compiler has to step in.
-        addAnimal(cats2);
+        //addAnimal(cats2);
 
         // 1b. 'extends' - polymorphic assignments
         // Note: extends is read-only
         List<? extends Animal> animals1 = new ArrayList<Animal>();
-        animals1.add(new Animal());// read-only
+        //animals1.add(new Animal());// read-only
         List<? extends Animal> animals2 = new ArrayList<Dog2>();
         List<? extends Animal> animals4 = new ArrayList<Terrier>();
         List<? extends Animal> animals3 = new ArrayList<Cat3>();
         List<? extends Animal> animals5 = new ArrayList<Manx>();
-        List<? extends Animal> animals6 = new ArrayList<Object>();
+        //List<? extends Animal> animals6 = new ArrayList<Object>();
 
         // 1c. 'super' - polymorphic assignments
         List<? super Dog2> dogs1 = new ArrayList<Dog2>();
         dogs1.add(new Dog2()); // now, can add to the list
         List<? super Dog2> dogs2 = new ArrayList<Animal>();
         List<? super Dog2> dogs3 = new ArrayList<Object>();
-        List<? super Dog2> dogs4 = new ArrayList<Terrier>();
+        //List<? super Dog2> dogs4 = new ArrayList<Terrier>();
 
         // 2. declarations for 'extends' and 'super' examples
         List<Object> objects   = new ArrayList<>(); objects.add(new Object());
@@ -111,12 +111,12 @@ public class GenericsMain {
         // IN: List<Animal>, List<Cat>, List<Manx>, List<Dog>, List<Terrier>
         // If 'extends' allowed us to add to 'list', then we could take in
         // a List of Cat's and add a Dog to it - thereby breaking type safety.
-        list.add(new Cat3());      // compiler error if we try to modify 'list'
-        list.add(new Dog2());      // compiler error if we try to modify 'list'
-        list.add(new Animal());   // compiler error if we try to modify 'list'
-        for(Dog2 dog:list){        // compiler errors reading - 'list' could be a list of Cat's
-            System.out.println(dog);
-        }
+//        list.add(new Cat3());      // compiler error if we try to modify 'list'
+//        list.add(new Dog2());      // compiler error if we try to modify 'list'
+//        list.add(new Animal());   // compiler error if we try to modify 'list'
+//        for(Dog2 dog:list){        // compiler errors reading - 'list' could be a list of Cat's
+//            System.out.println(dog);
+//        }
         // No compiler errors reading once we treat them as Animal; whether this method receives
         // in a list of Animal, Cat, Manx, Dog, or Terrier; they are *all* Animal.
         for(Animal animal:list){
