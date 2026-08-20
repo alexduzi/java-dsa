@@ -1,8 +1,6 @@
 package br.com.alexduzi.java_concurrency;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class SynchronizedCollection {
     // Usefull if you are given an existing non-concurrent collection
@@ -21,5 +19,17 @@ public class SynchronizedCollection {
         List<String> dogTypesSyn = Collections.synchronizedList(dogTypes);
 
         // safe to use dogTypesSyn with multiple threads...
+
+        Map<String, String> capitalCities = new HashMap<>();
+        // Map<String, String> capitalCities = new ConcurrentHashMap<>(); // fixes the issue also
+
+        capitalCities.put("Oslo", "Norway");
+        capitalCities.put("Copenhagen", "Denmark");
+
+        Map<String, String> syncCapitalCities = Collections.synchronizedMap(capitalCities);
+        for (String key : syncCapitalCities.keySet()) {
+            System.out.println(key + " is the capital of " + syncCapitalCities.get(key));
+            // syncCapitalCities.remove(key); // throws ConcurrentModificationException
+        }
     }
 }
