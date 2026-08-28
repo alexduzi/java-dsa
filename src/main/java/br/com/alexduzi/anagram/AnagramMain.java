@@ -62,6 +62,21 @@ public class AnagramMain {
         return true;
     }
 
+    static boolean isAnagram4(String s, String t) {
+        if (s.length() != t.length()) {
+            return false;
+        }
+
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            map.merge(s.charAt(i), 1, Integer::sum);
+            map.merge(t.charAt(i), -1, Integer::sum);
+        }
+
+        return map.values().stream().anyMatch(v -> v != 0);
+    }
+
     public static void main(String[] args) {
         System.out.println(isAnagram("anagram", "nagaram"));
         System.out.println(isAnagram("rat", "car"));
