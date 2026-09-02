@@ -1,4 +1,4 @@
-package br.com.alexduzi.java_stream_exercises.intermediate_questions;
+package br.com.alexduzi.java_stream_exercises._2_intermediate_questions;
 
 import java.util.*;
 import java.util.stream.Collectors;

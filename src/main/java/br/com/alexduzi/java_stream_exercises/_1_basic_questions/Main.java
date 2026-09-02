@@ -1,6 +1,5 @@
-package br.com.alexduzi.java_stream_exercises.basic_questions;
+package br.com.alexduzi.java_stream_exercises._1_basic_questions;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.IntSummaryStatistics;
 import java.util.List;
